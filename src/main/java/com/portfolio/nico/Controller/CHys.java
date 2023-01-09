@@ -27,9 +27,29 @@ public class CHys {
     Shys shys;
     
     @GetMapping("/lista")
-    public  ResponseEntity<List<hys>> list(){
+    public ResponseEntity<List<hys>> list(){
         List<hys> list = shys.list();
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+    
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<hys> getById(@PathVariable("id") int id){
+        if(!shys.existsById(id)){
+            return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
+        }
+        
+        hys hys = shys.getOne(id).get();
+        
+        return new ResponseEntity(hys, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id){
+        if(!shys.existsById(id)){
+            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.NOT_FOUND);
+        }
+        shys.delete(id);
+        return new ResponseEntity(new Mensaje("Skill Eliminada"), HttpStatus.OK);
     }
     
     @PostMapping("/create")
@@ -47,21 +67,10 @@ public class CHys {
         return new ResponseEntity(new Mensaje("Skill Agregada"), HttpStatus.OK);
     }
     
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<hys> getById(@PathVariable("id") int id){
-        if(!shys.existsById(id)){
-            return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        }
-        
-        hys hys = shys.getOne(id).get();
-        
-        return new ResponseEntity(hys, HttpStatus.OK);
-    }
-    
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoHys dtohys){
         if(!shys.existsById(id)){
-            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
         }
         if(shys.existsByNombre(dtohys.getNombre()) && shys.getByNombre(dtohys.getNombre()).get().getId() != id){
             return new ResponseEntity(new Mensaje("Esa skill ya existe"), HttpStatus.BAD_REQUEST);
@@ -76,16 +85,5 @@ public class CHys {
         
         shys.save(hys);
         return new ResponseEntity(new Mensaje("Skill Actualizada"), HttpStatus.OK);
-    }
-    
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id){
-        if(!shys.existsById(id)){
-            return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
-        }
-        
-        shys.delete(id);
-        
-        return new ResponseEntity(new Mensaje("Skill Eliminada"), HttpStatus.OK);
     }
 }
