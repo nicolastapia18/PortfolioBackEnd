@@ -1,7 +1,7 @@
 package com.portfolio.nico.Controller;
 
-import com.portfolio.nico.Dto.dtoPersona;
 import com.portfolio.nico.Entity.Persona;
+import com.portfolio.nico.Dto.dtoPersona;
 import com.portfolio.nico.Security.Controller.Mensaje;
 import com.portfolio.nico.Service.ImpPersonaService;
 import java.util.List;
@@ -24,7 +24,7 @@ public class PersonaController {
     @Autowired
     ImpPersonaService personaService;
     
-    @GetMapping("/lista")
+   @GetMapping("/lista")
     public ResponseEntity<List<Persona>> list(){
         List<Persona> list = personaService.list();
         return new ResponseEntity(list, HttpStatus.OK);
@@ -40,29 +40,6 @@ public class PersonaController {
         
         return new ResponseEntity(persona, HttpStatus.OK);
     }
-    
-    /*@DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id){
-        if(!personaService.existsById(id)){
-            return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.NOT_FOUND);
-        }
-        personaService.delete(id);
-        return new ResponseEntity(new Mensaje("Persona eliminada"), HttpStatus.OK);
-    }
-    
-    @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody dtoPersona dtopersona){
-        if(StringUtils.isBlank(dtopersona.getNombre())){
-            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        }
-        if(personaService.existsByNombre(dtopersona.getNombre())){
-            return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        }
-        
-        Persona persona = new Persona(dtopersona.getNombre(), dtopersona.getDescripcion());
-        personaService.save(persona);
-        return new ResponseEntity(new Mensaje("Persona agregada"), HttpStatus.OK);
-    }*/
     
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody dtoPersona dtopersona){

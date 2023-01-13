@@ -2,25 +2,24 @@ package com.portfolio.nico.Dto;
 
 import javax.validation.constraints.NotBlank;
 
-public class dtoPersona {
+
+public class dtoProyectos {
     @NotBlank
     private String nombre;
     @NotBlank
-    private String apellido;
-    @NotBlank
     private String descripcion;
     @NotBlank
-    private String img;
+    private String link;
     
     //Constructor
 
-    public dtoPersona() {
+    public dtoProyectos() {
     }
-    public dtoPersona(String nombre, String apellido, String descripcion, String img) {
+
+    public dtoProyectos(String nombre, String descripcion, String link) {
         this.nombre = nombre;
-        this.apellido = apellido;
         this.descripcion = descripcion;
-        this.img = img;
+        this.link = link;
     }
     
     //Getter y Setter
@@ -33,14 +32,6 @@ public class dtoPersona {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -49,12 +40,12 @@ public class dtoPersona {
         this.descripcion = descripcion;
     }
 
-    public String getImg() {
-        return img;
+    public String getLink() {
+        return link;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setLink(String link) {
+        this.link = link;
     }
     
 }
